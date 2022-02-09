@@ -3,15 +3,16 @@ const Category = ({ category }) => {
     <div className="MenuItems">
       <h2>{category.name}</h2>
       {/* List de produits */}
-      <div className="MenuItems--items">
+      <div class="MenuItems--items">
         {category.meals.map((meal, index) => {
           return (
             <div
               onClick={() => {
                 console.log("J'ai cliqué sur le produit ====> ", meal);
               }}
+              className="MenuItem"
             >
-              <div className="MenuItem">
+              <div>
                 <div className="MenuItem--card">
                   <div className="MenuItem--texts">
                     <h3>{meal.title}</h3>
