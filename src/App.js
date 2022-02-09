@@ -1,23 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import axios from "axios";
+import Category from "./components/Category";
+import Restaurant from "./components/Restaurant";
+import icon from "./logo.svg";
+import Icondeliveroo from "./Icondeliveroo";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    const response = await axios.get("http://localhost:3100/");
+    // console.log(response.data);
+    setData(response.data);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return isLoading ? (
+    <div>En cours de chargement...</div>
+  ) : (
+    <div className="">
+      <header class="Header">
+        <div className="TopBar">
+          <div className="TopBar--center">
+            <Icondeliveroo />
+          </div>
+        </div>
       </header>
+
+      <Restaurant restaurant={data.restaurant} />
+      {/* Liste de catégories */}
+      {data.categories.map((category, index) => {
+        return (
+          category.meals.length > 0 && (
+            <div className="Content--center">
+              <div className="Menu">
+                <Category key={index} category={category} />
+              </div>
+            </div>
+          )
+        );
+      })}
     </div>
   );
 }
