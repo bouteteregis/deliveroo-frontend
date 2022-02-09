@@ -14,6 +14,7 @@ function App() {
     const response = await axios.get(
       "https://deliveroo-backend82.herokuapp.com/"
     );
+    //
     // console.log(response.data);
     setData(response.data);
     setIsLoading(false);
